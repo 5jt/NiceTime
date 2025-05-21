@@ -19,5 +19,5 @@
   source: "APLSource",
   tags: "date,time,text",
   userCommandScript: "",
-  version: "0.1.0+0",
+  version: "0.1.0+1",
 }
