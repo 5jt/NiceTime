@@ -1,0 +1,28 @@
+ {ec}←tests;now;startSunday;T
+ T←##.tinytest
+ ec←0 ⍝ number of errors found in test cases
+ now←2025 5 20 10 20 47 758
+
+⍝ Error handling
+ ec+←now(was T.catch 11)(¯1@3)now ⍝ invalid date
+ ec+←now(was T.catch 123)(+∘1@3)now ⍝ later then
+
+⍝ find interval
+ ec+←now(was T.match'just now')now
+ ec+←now(was T.match'just now')(-∘30@6)now
+ ec+←now(was T.match'1 minute ago')(-∘1@5)now
+ ec+←now(was T.match'10 minutes ago')(-∘10@5)now
+ ec+←now(was T.match'an hour ago')(-∘1@4)now
+ ec+←now(was T.match'3 hours ago')(-∘3@4)now
+ ec+←now(was T.match'yesterday')(-∘1 3@3 4)now
+ ec+←now(was T.match'Monday')(-∘2 3@3 4)now
+ ec+←now(was T.match'Friday last week')(-∘5 3@3 4)now
+ ec+←now(was T.match'2 weeks ago')(-∘10@3)now
+ ec+←now(was T.match'last month')(-∘1@2)now
+ ec+←now(was T.match'October last year')(2024 10@1 2)now
+ ec+←now(was T.match'May 2022')(2022@1)now
+
+⍝ ToDo
+ startSunday←1
+
+ T.report ec

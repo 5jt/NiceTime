@@ -1,0 +1,37 @@
+ was←{
+    ⍝ period of timestamps (⍺ ⍵)
+     ⍺←⎕TS
+
+     11::⎕SIGNAL 11
+     IDNs←1 ⎕DT ⍺ ⍵
+     </IDNs:'now earlier than then'⎕SIGNAL 123
+    ⍝ how many years have ended in (⍺ ⍵)... and so on
+     years←-/⊃¨⍺ ⍵
+     months←-/0 12∘⊥¨2↑¨⍺ ⍵
+     days←-/⌊IDNs
+     hms←24 60 60
+     secs←(×/days,hms)+⌊0.5+-/hms∘⊥¨3↓¨6↑¨⍺ ⍵
+     weeks←-/⌊7÷⍨⌊IDNs
+
+     mn←monthnames⊃⍨2⊃⍵
+     dn←weekdays⊃⍨1+7|⌊2⊃IDNs
+
+    ⍝ Same day
+     days=0:{
+         ⍵<60:'just now'
+         ⍵<120:'1 minute ago'
+         ⍵<3600:(⍕⌊⍵÷60),' minutes ago'
+         ⍵<7200:'an hour ago'
+         (⍕⌊⍵÷3600),' hours ago'
+     }secs
+    ⍝ Current week
+     weeks=0:{⍵=1:'yesterday' ⋄ dn}days
+    ⍝ Previous week
+     weeks=1:{⍵=7:'a week ago' ⋄ dn,' last week'}days
+    ⍝ Earlier
+     months=0:(⍕weeks),' weeks ago' ⍝ current month
+     months=1:'last month'
+     years=0:mn ⍝ current year
+     years=1:mn,' last year' ⍝ previous year
+     mn,' ',⍕⊃⍵
+ }
